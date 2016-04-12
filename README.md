@@ -19,7 +19,25 @@ Installing on Linux is always installing from source anyway, be it from a tarbal
 
 rClr is not your average R package and requires a few more tools than is typical for most R packages. 
 
-On Windows you will need a C# and C and/or Visual C++ compiler. Using the Visual Studio 2013 toolchain is recommended. Read [the current build instructions](https://r2clr.codeplex.com/wikipage?title=Build%20instructions&referringTitle=Documentation). Note that as of September 2015 using Mono on Windows is not maintained.
+On Windows you will need a C# and C and/or Visual C++ compiler. Using the Visual Studio 2015 toolchain is recommended, earlier version are untested. While [the current build instructions](https://r2clr.codeplex.com/wikipage?title=Build%20instructions&referringTitle=Documentation) are old they mostly apply, see detail below. Note that as of September 2015 using Mono on Windows is not maintained.
+
+```
+@echo off
+PATH=C:\RBuildTools\3.3\bin;C:\RBuildTools\3.3\gcc-4.6.3\bin;%PATH%
+
+set R="c:\Program Files\R\R-3.2.4revised\bin\x64\R.exe"
+
+set BuildConfiguration=Release
+:: use this to build in debug mode
+:: set BuildConfiguration=Debug
+
+set VCTargetsPath=C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140
+
+%R% CMD check rClr
+%R% CMD REMOVE rClr
+%R% CMD INSTALL rClr
+```
+
 
 A Linux distribution with R, g++ and the Mono toolchain (including xbuild) should work. Note that while a range of Mono versions in the 3.X series may work, I recommend you use versions 3.8 or above. This may require you to look for adequate versions (for instance Debian is lagging behind currently). You may want to have a look at the instructions at the [mono download page for Linux](http://www.mono-project.com/download/#download-lin) and use the Xamarin packages.
 
